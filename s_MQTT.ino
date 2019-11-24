@@ -142,16 +142,18 @@ boolean reconnect() {
     if (client.connect(clientId.c_str(), LWTV , 1, true, "Offline")) {
       Serial.println("connected");
       client.publish(LWTV,"Online", true);
+      mqttActive = 1;
       readLinks ();
       flashLED = 0 ;
       sensorData ();
-      sprintf(mqttStat ,"%s %s","MQTT is:",vOnline); 
+     // sprintf(mqttStat ,"%s %s","MQTT is:",vOnline); 
      // mqttIpadr ();
       digitalWrite(13, HIGH);
       subscribe_intopic ();   // Call to subscribe to topics
       show_mqtt_status(1);    // Print to OLED
       run_send_data();       // Send all Status Data
       reportInputStates();
+      
       //customLink = 1;
       //overide = 0 ;
   }

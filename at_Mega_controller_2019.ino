@@ -211,7 +211,7 @@ EthernetServer server(80);
 EthernetClient ethClient;
 PubSubClient client(ethClient);
 long lastReconnectAttempt = 0;
-
+byte mqttActive = 0;
 
 #define NUM_BUTTONS 33
 bool inputStates[] = {
@@ -441,13 +441,14 @@ void loop(){
 
  if (!client.connected()) {
   long now = millis();
-  customLink = 1;
+  //customLink = 1;
   
   //overide = 1 ;
     if (now - lastReconnectAttempt > 5000) {
       lastReconnectAttempt = now;
       // Attempt to reconnect
       Serial.println("Conneting .....");
+      mqttActive = 0;
       show_mqtt_status (0);
        flashLED = 1;
       if (reconnect()) {

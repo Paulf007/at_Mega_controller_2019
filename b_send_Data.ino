@@ -1,5 +1,5 @@
 void time_data () {
-if (stop_publish == 0){  
+if ( mqttActive == 1){  
  unsigned long currentMillis = millis(); // grab current time
   // check if "interval" time has passed (1000 milliseconds)
  if ((unsigned long)(currentMillis - previousMillis) >= interval) {

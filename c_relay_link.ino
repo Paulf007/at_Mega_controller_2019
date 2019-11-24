@@ -26,9 +26,9 @@ void hardLinkFromMemory (){ // Run the Links so that each pin can be recalled
   int GetAdd = ((i+100)*2)-97 ; 
   int sw = EEPROM.read(GetAdd);
   linkArray[i]=sw ;
- //  Serial.print(F("Value from Memory:"));
- //Serial.println(sw);
- // switchOnHarlinkFromStartUp(i);
+  //Serial.print(F("Value from Memory:"));
+  //Serial.println(sw);
+  //switchOnHarlinkFromStartUp(i);
   }
 }
 
@@ -41,7 +41,7 @@ void switchOnHarlinkFromStartUp(byte link){
  Serial.println(relayCMND);
  if (relayCMND > 0){          // If There is no link (0) to the relay so ignore the command 
   sendRelayCommand (relayCMND ,'2');
-  Serial.print(F("Relay Command Sent"));
+  Serial.println(F("Links are set from startup"));
  }
  // sendRelayCommand (relayCMND ,"2");
   
