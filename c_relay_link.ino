@@ -35,13 +35,14 @@ void hardLinkFromMemory (){ // Run the Links so that each pin can be recalled
 void switchOnHarlinkFromStartUp(byte link){
   
  int relayCMND = linkArray[link];
- Serial.print(F("Relay Linked to Switch"));
+ Serial.print(F("Switch:"));
  Serial.print(link);
- Serial.print(F(":"));
+ Serial.print(F(" Linked to Relay:"));
  Serial.println(relayCMND);
  if (relayCMND > 0){          // If There is no link (0) to the relay so ignore the command 
-  sendRelayCommand (relayCMND ,'2');
-  Serial.println(F("Links are set from startup"));
+  Serial.print(F("Send Relay:"));
+  Serial.println(relayCMND);
+  sendRelayCommand (relayCMND-1 ,'2'); // Relay Number starts at 1 and not at 0
  }
  // sendRelayCommand (relayCMND ,"2");
   

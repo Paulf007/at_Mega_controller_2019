@@ -191,7 +191,6 @@ char statusCmnd[30]="";
 char sensorTopic[30]="";
 
 
-
 //seting up the EthernetShield
 //change the defaults the match your own network
 byte mac[6] = { 0x90, 0xA2, 0xDA, 0x18, 0x25, 0x77 };
