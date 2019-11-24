@@ -1,16 +1,26 @@
 void write_data (int addr , int info ){ // update the custom pin link
-
-    int temp_comp ;  
-    int temp_val = info ;
-    EEPROM.get(addr,temp_comp);
+    Serial.print(F("Data Receved to Write in ROM:"));
+    Serial.println(info); 
+    //int temp_comp ;  
+    //int temp_val = info ;
+    //EEPROM.get(addr,temp_comp);
     //Serial.print("Memory Value : ");
     //Serial.println(temp_comp);
-    if (temp_comp!=temp_val){
+   // if (temp_comp!=temp_val){
      //Serial.println("Write new Data");
-     EEPROM.write(addr,info);
-     //Serial.println("Read EEPROM after write:");
-    // EEPROM.get(addr,temp_comp);
-    // int s = ((addr+97)/2)-100 ;     
+     if (info <= pinCount){              // Test to make sure that the Correct value is placed
+      EEPROM.write(addr,info);
+      //readLinks ();
+     wdt_enable(WDTO_2S); 
+     delay(1500);
+     }
+     
+     
+     //Serial.print("Test EEPROM after write:");
+     //int value = EEPROM.read(addr);
+     //EEPROM.get(addr,temp_comp);
+     //int s = ((addr+97)/2)-100 ;   
+     //Serial.print(value);  
     
      /*  
           String  payload1 = "{";
@@ -25,9 +35,9 @@ void write_data (int addr , int info ){ // update the custom pin link
           payload1.toCharArray( payLd, 100 ); 
      client.publish(outTopicV,payLd);
      */
-     readLinks ();
+     
      //update_sw (201); 
-     }
+   //  }
    }
 
 void readEEOROMip (){

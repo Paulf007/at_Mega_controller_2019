@@ -43,6 +43,7 @@ void read_input_pins (){
       sprintf(stopic ,"%s%d",outPinTopicV,i);
       client.publish(stopic, ON);
       int_link(i); // sent to c_sw_relay_link
+      switchOnHarlinkFromStartUp(i);
       //connect_relay(i); // Hard Coded relay links is now disabled
       show_statR2(1,i); // send to OLED
       
@@ -60,6 +61,7 @@ void read_input_pins (){
       sprintf(stopic ,"%s%d",outPinTopicV,i);
       client.publish(stopic, OFF);
       int_link(i); // sent to c_sw_relay_link
+       switchOnHarlinkFromStartUp(i); // To Check Harcoded link so that eeprom does not get read all the time
       //connect_relay(i);  // Hard Coded relay links is now disabled
       show_statR2(0,i);// send to OLED
 

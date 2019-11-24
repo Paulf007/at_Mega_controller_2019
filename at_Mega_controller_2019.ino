@@ -37,8 +37,10 @@ The Embedded Network Setup Webpage was Made by JO3RI check http://www.jo3ri.be/a
 * 36 -  add check to enable or disable OLED display so that if the oled is not active it will be discarded - not yet completed
 * 37 -  check if the MQTT command is for switching so that it could be ignored
 * 38 - report status of all relays every 5 min ( Could make this customisable)
+* 39 - Link Custom On Start sothat the memory does not get called all the time. 
 * Genereate Mac: https://ssl.crox.net/arduinomac/
 * NOTE IF USING A NEW BOARD FIRST RUN EEPROM CLEAR
+* 
 */
 
 
@@ -53,8 +55,16 @@ The Embedded Network Setup Webpage was Made by JO3RI check http://www.jo3ri.be/a
 #include "avdweb_VirtualDelay.h"
 //#include <MemoryFree.h>
 int ver = 37 ;
-const char* Fname = "Garage Controller"; // This is currently Static Could be changed later Via MQTT
-const char* macS = "90:A2:DA:6F:47:D5"; // This is used to report the mac address for the Monitor
+const char* Fname = "Test Controller"; // This is currently Static Could be changed later Via MQTT
+const char* macS = "90:A2:DA:18:25:77"; // This is used to report the mac address for the Monitor
+//+------------------------------------------------------------------+
+//| Link Custom Links from Memory
+//+------------------------------------------------------------------+
+//byte Link0 = 0,Link1 = 0,Link2 = 0,Link3 = 0,Link4=0,Link5=0,Link6=0,Link7=0,Link8=0,Link9=0,Link10=0,Link11=0,Link12=0,Link13=0,Link14=0,Link15=0,Link16=0,Link17=0,Link18=0,Link19=0,Link20=0,Link21=0,Link22=0,Link23=0,Link24=0,Link25=0,Link26=0,Link27=0,Link28=0,Link29=0,Link30=0,Link31=0,Link32=0,Link33=0
+//#define NUM_LINKS 33
+byte Link0=0,Link1=0,Link2=0,Link3=0,Link4=0,Link5=0;
+byte linkArray[] = {Link0,Link2,Link3,Link4,Link5};
+
 //+------------------------------------------------------------------+
 //|Setup Virtual Delay
 //+------------------------------------------------------------------+
@@ -184,8 +194,8 @@ char sensorTopic[30]="";
 
 //seting up the EthernetShield
 //change the defaults the match your own network
-byte mac[6] = { 0x90, 0xA2, 0xDA, 0x6F, 0x47, 0xD5 };
-byte ip[] = {192,168,8,99};
+byte mac[6] = { 0x90, 0xA2, 0xDA, 0x18, 0x25, 0x77 };
+byte ip[] = {192,168,8,91};
 byte subnet[] = {255,255,255,0};
 byte gateway[] = {192,168,8,1};
 byte dnsserver[] = {192,168,8,1};
@@ -417,6 +427,8 @@ webTimeOut.start(300000); // Webpage will be active for 5 min thereafter you wil
 previousMillis = millis();
 stop_publish = 0 ;
 dht.begin();
+Serial.println(F("HARDLINK"));
+hardLinkFromMemory ();
 }
 
 

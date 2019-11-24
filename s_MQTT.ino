@@ -21,7 +21,7 @@ String val;
 
 
 void callback(char* topic, byte* payload, unsigned int length) {
-/* - use to confirm if MQTT recieve command
+// - use to confirm if MQTT recieve command
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
@@ -29,7 +29,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print((char)payload[i]);
   }
 Serial.println ();
-*/
+//
 if(strcmp(topic, chTopicV) == 0){
   Serial.println ("Change Topic Recived:");
   String msgIN = "";
@@ -69,7 +69,7 @@ val = msgIN; // this is the payload from MQTT
 byte TestTopic = testForPOWERcommand(topic);
 if(TestTopic == 1){
       //Serial.println(F("POWER Command Recived :"));
-      char* token = strtok(topic,inPOWERcommand); // Remove the Test topic so that only the number is availablechar* to int
+      char* token = strtok(topic,inPOWERcommand); // Remove the Test topic so that only the number is available char* to int
       int posInArray = atoi(token);
       char* switchState = (char)payload[0];
       sendRelayCommand ((posInArray-1) ,switchState);
@@ -84,11 +84,18 @@ if(TestTopic == 1){
       stop_publish = 1 ;
           Serial.print("Link :");
           Serial.println(link);
-          if (link >= 100 && link <= 200 ){ // Cmd - is for linking the relay with the switch
+          if (link >= 100 && link <= 200 ){   // Cmd - is for linking the relay with the switch
             Serial.println("Update EEPROM with relay link :");
             int RelayPl = (link*2)-97 ;// +2 is to make sure that two places is used fo the int
-            //int SwitchPl = atol(val.c_str()) ; // Payload of the MQTT Measage
-            write_data(RelayPl,cmdNr);
+  String msgIN = "";
+for (int i=0;i<length;i++)
+{
+msgIN += (char)payload[i];
+Serial.print((char)payload[i]);
+}
+val = msgIN; // this is the payload from MQTT
+int cmdNr1 = val.toInt();
+            write_data(RelayPl,cmdNr1);
           }else if (link >= 200 && link <= 221 ){
             Serial.print("Link Switch Activated:");
             Serial.println(cmdNr);
