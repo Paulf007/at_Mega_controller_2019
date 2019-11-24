@@ -54,7 +54,7 @@ void readEEOROMip (){
  }
 // Get the maintpoic value from the EEOROM and set for later use
  void readEEOROM (char add){
-  Serial.print("Read Main Topic");
+  Serial.print(F("Read Main Topic"));
   int i;
   char data[200]; //Max 100 Bytes
   int len=0;
@@ -70,7 +70,7 @@ void readEEOROMip (){
   //return String(data);
   strcpy(maintopicV, data);
   //const char* emaintopic = data;
-  Serial.print("Main Topic is:");
+  Serial.print(F("Main Topic is:"));
   Serial.println(data);
   mt_len = strlen(data); // get the lenth of the main topic so that it can be used in the MQTT recieved payload
   // Set the variable funtions

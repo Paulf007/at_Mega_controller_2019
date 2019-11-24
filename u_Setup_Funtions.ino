@@ -1,7 +1,7 @@
 void check_timers (){
   if (webTimeOut.elapsed()){
   webpageActive = 0 ;
-  Serial.print(F("Webpage Disable"));
+ //Serial.print(F("Webpage Disable"));
   flashLED = 0;
  }
 }

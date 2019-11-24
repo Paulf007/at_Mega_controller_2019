@@ -35,13 +35,13 @@ void hardLinkFromMemory (){ // Run the Links so that each pin can be recalled
 void switchOnHarlinkFromStartUp(byte link){
   
  int relayCMND = linkArray[link];
- Serial.print(F("Switch:"));
- Serial.print(link);
- Serial.print(F(" Linked to Relay:"));
- Serial.println(relayCMND);
+//Serial.print(F("Switch:"));
+//Serial.print(link);
+//Serial.print(F(" Linked to Relay:"));
+//Serial.println(relayCMND);
  if (relayCMND > 0){          // If There is no link (0) to the relay so ignore the command 
-  Serial.print(F("Send Relay:"));
-  Serial.println(relayCMND);
+ //Serial.print(F("Send Relay:"));
+ //Serial.println(relayCMND);
   sendRelayCommand (relayCMND-1 ,'2'); // Relay Number starts at 1 and not at 0
  }
  // sendRelayCommand (relayCMND ,"2");
@@ -51,8 +51,8 @@ void switchOnHarlinkFromStartUp(byte link){
 void int_link(int addr){
   int switchState;
   // first check if int link as active or not.
-  Serial.print(F("Check if Custom Link is Active:"));
-  Serial.println(customLink); 
+ //Serial.print(F("Check if Custom Link is Active:"));
+ //Serial.println(customLink); 
   if (customLink == 1){
   int relay;
   int GetAdd = ((addr+100)*2)-97 ; // this is how the pin was saved in the memory so that two places was added for each link. // ADD is the SwitchPin and the Payload is the Relay Link
