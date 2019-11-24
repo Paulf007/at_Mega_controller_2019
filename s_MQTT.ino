@@ -84,7 +84,7 @@ if(TestTopic == 1){
       stop_publish = 1 ;
           Serial.print("Link :");
           Serial.println(link);
-          if (link >= 100 && link <= 200 ){   // Cmd - is for linking the relay with the switch
+          if (link >= 100 && link <= (NUM_LINKS+101) ){   // To make sure that the Data is correct
             Serial.println("Update EEPROM with relay link :");
             int RelayPl = (link*2)-97 ;// +2 is to make sure that two places is used fo the int
   String msgIN = "";

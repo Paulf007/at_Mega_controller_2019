@@ -61,9 +61,9 @@ const char* macS = "90:A2:DA:18:25:77"; // This is used to report the mac addres
 //| Link Custom Links from Memory
 //+------------------------------------------------------------------+
 //byte Link0 = 0,Link1 = 0,Link2 = 0,Link3 = 0,Link4=0,Link5=0,Link6=0,Link7=0,Link8=0,Link9=0,Link10=0,Link11=0,Link12=0,Link13=0,Link14=0,Link15=0,Link16=0,Link17=0,Link18=0,Link19=0,Link20=0,Link21=0,Link22=0,Link23=0,Link24=0,Link25=0,Link26=0,Link27=0,Link28=0,Link29=0,Link30=0,Link31=0,Link32=0,Link33=0
-//#define NUM_LINKS 33
-byte Link0=0,Link1=0,Link2=0,Link3=0,Link4=0,Link5=0;
-byte linkArray[] = {Link0,Link2,Link3,Link4,Link5};
+byte NUM_LINKS = 33;
+byte Link0=0,Link1=0,Link2=0,Link3=0,Link4=0,Link5=0,Link6=0,Link7=0,Link8=0,Link9=0,Link10=0,Link11=0,Link12=0,Link13=0,Link14=0,Link15=0,Link16=0,Link17=0,Link18=0,Link19=0,Link20=0,Link21=0,Link22=0,Link23=0,Link24=0,Link26=0,Link27=0,Link28=0,Link29=0,Link30=0,Link31=0,Link32=0,Link33=0;
+byte linkArray[] = {Link0 ,Link1,Link2,Link3,Link4,Link5,Link6,Link7,Link8,Link9,Link10,Link11,Link12,Link13,Link14,Link15,Link16,Link17,Link18,Link19,Link20,Link21,Link22,Link23,Link24,Link26,Link27,Link28,Link29,Link30,Link31,Link32,Link33};
 
 //+------------------------------------------------------------------+
 //|Setup Virtual Delay

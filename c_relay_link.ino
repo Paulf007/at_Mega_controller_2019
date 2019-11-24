@@ -22,7 +22,7 @@ void readLinks (){
 
 
 void hardLinkFromMemory (){ // Run the Links so that each pin can be recalled
-  for (int i = 0; i < 5; i++)  {
+  for (int i = 0; i < NUM_LINKS; i++)  {
   int GetAdd = ((i+100)*2)-97 ; 
   int sw = EEPROM.read(GetAdd);
   linkArray[i]=sw ;
