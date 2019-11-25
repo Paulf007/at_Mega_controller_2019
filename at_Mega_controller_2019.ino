@@ -57,14 +57,13 @@ The Embedded Network Setup Webpage was Made by JO3RI check http://www.jo3ri.be/a
 #include "avdweb_VirtualDelay.h"
 //#include <MemoryFree.h>
 int ver = 41 ;
-const char* Fname = "House Controller"; // This is currently Static Could be changed later Via MQTT
-const char* macS = "90:A2:DA:CB:90:4C"; // This is used to report the mac address for the Monitor
+const char* Fname = "Test Bank"; // This is currently Static Could be changed later Via MQTT
+const char* macS = "90:A2:DA:F6:43:A7"; // This is used to report the mac address for the Monitor
 byte ip[] = {192,168,8,91};
-byte mac[6] = { 0x90, 0xA2, 0xDA, 0xCB, 0x90, 0x4C };
+byte mac[6] = { 0x90, 0xA2, 0xDA, 0xF6, 0x43, 0xA7};
 //+------------------------------------------------------------------+
 //| Link Custom Links from Memory
 //+------------------------------------------------------------------+
-//byte Link0 = 0,Link1 = 0,Link2 = 0,Link3 = 0,Link4=0,Link5=0,Link6=0,Link7=0,Link8=0,Link9=0,Link10=0,Link11=0,Link12=0,Link13=0,Link14=0,Link15=0,Link16=0,Link17=0,Link18=0,Link19=0,Link20=0,Link21=0,Link22=0,Link23=0,Link24=0,Link25=0,Link26=0,Link27=0,Link28=0,Link29=0,Link30=0,Link31=0,Link32=0,Link33=0
 byte NUM_LINKS = 33;
 byte Link0=0,Link1=0,Link2=0,Link3=0,Link4=0,Link5=0,Link6=0,Link7=0,Link8=0,Link9=0,Link10=0,Link11=0,Link12=0,Link13=0,Link14=0,Link15=0,Link16=0,Link17=0,Link18=0,Link19=0,Link20=0,Link21=0,Link22=0,Link23=0,Link24=0,Link26=0,Link27=0,Link28=0,Link29=0,Link30=0,Link31=0,Link32=0,Link33=0;
 byte linkArray[] = {Link0 ,Link1,Link2,Link3,Link4,Link5,Link6,Link7,Link8,Link9,Link10,Link11,Link12,Link13,Link14,Link15,Link16,Link17,Link18,Link19,Link20,Link21,Link22,Link23,Link24,Link26,Link27,Link28,Link29,Link30,Link31,Link32,Link33};
@@ -175,7 +174,7 @@ const char* vOffLine ="Offline";
 
 // Setup the full variable topics that will be changed at startup for the rest of the sketch
 char maintopicV[20] = "";    // Toipc gets updtated by the readEEOrom Funtion 
-char outTopicV[35] = "";
+//char outTopicV[35] = "";
 char inTopicV[35] = "";
 char outRelayTopicV[35] = ""; 
 char outPinTopicV[35] = ""; 
@@ -186,11 +185,11 @@ char linkTopic1[40] = "";
 char topic1[40] = ""; 
 char mqttStat[15] ="";
 char outLinkR[40] ="";
-char outLinkRw[50] ="";
+//char outLinkRw[40] ="";
 char inPOWERcommand[30]="";
-char recState[30]="";
-char status_5[30]="";
-char status_0[30]="";
+//char recState[30]="";
+//char status_5[30]="";
+//char status_0[30]="";
 char statusCmnd[30]="";
 char sensorTopic[30]="";
 
@@ -341,7 +340,7 @@ PROGMEM const char * const string_table9[] = {htmlm0,htmlm1, htmlm2, htmlm3, htm
 const char html_n0 [] PROGMEM =" %</strong></em></p> ";
 const char html_n1 [] PROGMEM ="<p style=\"text-align: center;\"><em><strong>Topics for MQTT Server</strong></em></p> ";
 const char html_n2 [] PROGMEM ="<table style=\"height: 210px; margin-left: auto; margin-right: auto; width: 490px;\"><tbody><tr> ";
-const char html_n3 [] PROGMEM ="<td style=\"width: 251.5px; text-align: right;\"><em><strong>General info&nbsp;Topic :</strong></em></td>";
+const char html_n3 [] PROGMEM ="<td style=\"width: 251.5px; text-align: right;\"><em><strong>Sensor info&nbsp;Topic :</strong></em></td>";
 const char html_n4 [] PROGMEM ="<td style=\"width: 224.5px; text-align: left;\"><em><strong>";
 PROGMEM const char * const string_table8[] = {html_n0,html_n1, html_n2, html_n3, html_n4};
 
@@ -421,12 +420,12 @@ for (int i = 0; i < NUM_BUTTONS; i++) {
  // lastReconnectAttempt = 0; 
 overide = 0 ;
 //analogSw = 1 ;
-update_sw (201);  // Get the switch info 
+//update_sw (201);  // Get the switch info 
 showIPAddress();
 readLinks (); // Chech to see if liks is shown
 oledstart();
 //dht11 (); // Shouw DHT 11 Senor data on startup
-webTimeOut.start(300000); // Webpage will be active for 5 min thereafter you will need to start via MQTT command - to be added
+webTimeOut.start(300000); // Webpage will be active for 5 min thereafter you will need to start via MQTT command
 previousMillis = millis();
 stop_publish = 0 ;
 dht.begin();

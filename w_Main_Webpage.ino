@@ -240,7 +240,7 @@ client.println("<style=\"text-align: center; font color=\"white\" size=\"2\" fac
        client.println("<td style=\"width: 251.5px; text-align: right;\"><em><strong>General info&nbsp;Topic :</strong></em></td>");
        client.println("<td style=\"width: 224.5px; text-align: left;\"><em><strong>");//stat/"+maintopic+"/state</strong></em></td></tr><tr>");
        */
-       client.println(outTopicV);
+       client.println(sensorTopic);
        client.println("</strong></em></td></tr><tr>");
        client.println("<td style=\"width: 251.5px; text-align: right;\"><em><strong>Relay Command topic :</strong></em></td> ");
        client.println("<td style=\"text-align: left;\"><em><strong>");
@@ -309,6 +309,9 @@ client.println("<style=\"text-align: center; font color=\"white\" size=\"2\" fac
        client.println("<td style=\"width: 251.5px; text-align: right;\"><em><strong>Last will and testament :</strong></em></td> ");
        client.println("<td style=\"width: 224.5px; text-align: left;\"><em><strong>");
   */    
+       
+       char outLinkRw[40] ="";                                  // Only gets called when page is open
+       sprintf(outLinkRw ,"%s%s%s%s",stat,maintopicV,link,"#");
        client.println(outLinkRw);
        //client.println("Test Info");
         client.println();

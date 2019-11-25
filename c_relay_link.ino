@@ -28,58 +28,19 @@ void hardLinkFromMemory (){ // Run the Links so that each pin can be recalled
   linkArray[i]=sw ;
   //Serial.print(F("Value from Memory:"));
   //Serial.println(sw);
-  //switchOnHarlinkFromStartUp(i);
   }
 }
 
 void switchOnHarlinkFromStartUp(byte link){
   
- int relayCMND = linkArray[link];
-//Serial.print(F("Switch:"));
-//Serial.print(link);
-//Serial.print(F(" Linked to Relay:"));
-//Serial.println(relayCMND);
- if (relayCMND > 0){          // If There is no link (0) to the relay so ignore the command 
- //Serial.print(F("Send Relay:"));
- //Serial.println(relayCMND);
-  sendRelayCommand (relayCMND-1 ,'2'); // Relay Number starts at 1 and not at 0
+ int relayCMND = linkArray[link];         // Check what the Link is
+ if (relayCMND > 0){                      // If There is no link (0) to the relay so ignore the command 
+  sendRelayCommand (relayCMND-1 ,2);    // Toggle Relay - Number starts at 1 and not at 0
  }
- // sendRelayCommand (relayCMND ,"2");
-  
+
 }
 
-void int_link(int addr){
-  int switchState;
-  // first check if int link as active or not.
- //Serial.print(F("Check if Custom Link is Active:"));
- //Serial.println(customLink); 
-  if (customLink == 1){
-  int relay;
-  int GetAdd = ((addr+100)*2)-97 ; // this is how the pin was saved in the memory so that two places was added for each link. // ADD is the SwitchPin and the Payload is the Relay Link
-  //Serial.print("Adress to search:");
-  //Serial.println(addr);
-  // read the pin in the memory
-  // Serial.print("Get Relay Pin Info from EEPROM");
-  EEPROM.get(GetAdd,relay);
-  int Relaycheck = EEPROM.read(0);
-  if (relay!= 0){
-  //Serial.print("Link in Mem Pin:");
-  //Serial.println(addr);
-  //Serial.print("Relay Pin:");
-  //Serial.println(relay);
-  //check_relay(relay);
-  switchState = check_relay(relay-1);
-  switchRelay(switchState,relay-1);
-    }else{
-    //Serial.print("No Link for Pin:"); 
-    //Serial.println(addr);     
-    }
-  }
-}
-
-
-
-
+/*
 void update_sw (int val){
      int i ;
      EEPROM.get(201,i);
@@ -88,5 +49,5 @@ void update_sw (int val){
      customLink = i;      
      //Serial.print("Custom Link is: ");
      //Serial.println(customLink);
-     
 }
+*/

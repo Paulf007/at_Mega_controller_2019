@@ -1,8 +1,5 @@
 void subscribe_intopic (){
   client.subscribe(inTopicV);
- // client.subscribe("inTopic/test2");
- // client.subscribe(chTopicV);
- // client.subscribe(linkTopic);
  
   int idcheck = EEPROM.read(0);
      if (idcheck != ID){  } // Check if there is a value
@@ -30,82 +27,80 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
 Serial.println ();
 */
-if(strcmp(topic, chTopicV) == 0){
- Serial.println ("Change Topic Recived:");
-  String msgIN = "";
-for (int i=0;i<length;i++)
-{
-msgIN += (char)payload[i];
-Serial.print((char)payload[i]);
-}
-val = msgIN; // this is the payload from MQTT
-  
-  stop_publish = 1 ;
-     delay(1000);
-    // String value = String((char*)payload);
-     Serial.println("Writning to EEPROM");
-     Serial.println(val);
-     writeString(55,val);
-     EEPROM.write(0, 0x92);
-     Serial.println("Writning to EEPROM Done");
-     wdt_enable(WDTO_4S); 
-     delay(1500);
- }else  if (strcmp(topic, statusCmnd) == 0){
- byte a = atoi((char*)payload);
- //Serial.print(F("Payload"));
- //Serial.println(a);
-  //Serial.println((char)payload[0] );
-  //sendStatusData((char)payload[0]) ; 
- 
-  if (a == 1){
-    sendStatusData(1);
-   //Serial.print(F("DATA 1"));
-  } else if (a == 5){
-   sendStatusData(5) ; 
-   //Serial.println("Data 5 Sent");
-  } else if  (a == 9){         // STATUS = 9 Will activate web page
-    webpageActive = 1 ;
-    webTimeOut.start(300000);
+// ------------------- Convert Payload to Int to use later ------------------
+  char myNewArray[length+1];
+  for (int i=0;i<length;i++) {
+    myNewArray[i] = (char)payload[i];
   }
-}else{ 
+ myNewArray[length] = NULL;
+ int command = atoi(myNewArray);  // now an unsigned long
+ //Serial.print(F("Payload Command:"));   
+ //Serial.println(command);
+
+// ---------- Change Topic Command -------------------   // This will only be called once so Covert to String and write to memory and Restart
+if(strcmp(topic, chTopicV) == 0){                 
+  Serial.println ("Change Topic Recived:");
+    String msgIN = "";
+    for (int i=0;i<length;i++)
+    { msgIN += (char)payload[i];
+      Serial.print((char)payload[i]);
+        }
+          val = msgIN; // this is the payload from MQTT
+          stop_publish = 1 ;
+          delay(1000);
+         Serial.println("Writning to EEPROM");
+         Serial.println(val);
+         writeString(55,val);
+         EEPROM.write(0, 0x92);
+         Serial.println("Writning to EEPROM Done");
+         wdt_enable(WDTO_4S); 
+         delay(1500);
+ }
+ // ---------- Status Topic Command -------------------   // This will report the status of the Board - Similar to Sonoff sothat it could be used in a Monitor App
+ else if (strcmp(topic, statusCmnd) == 0){  
+  //  byte a = atoi((char*)payload);   // There is only a number exspected in this command so atoi can be used. 
+    if (command == 1){
+    sendStatusData(1);
+      }else if (command == 5){
+    sendStatusData(5) ; 
+     } else if  (command == 9){         // STATUS = 9 Will activate web page
+      webpageActive = 1 ;
+       webTimeOut.start(300000);
+      }
+        }else{ 
+ // ----------POWER Topic Command -------------------   // Will come in as POWER# (POWER1 , POWER2)
  
-byte TestTopic = testForPOWERcommand(topic);
-if(TestTopic == 1){
-      //Serial.println(F("POWER Command Recived :"));
-      char* token = strtok(topic,inPOWERcommand); // Remove the Test topic so that only the number is available char* to int
-      int posInArray = atoi(token);
-      char* switchState = (char)payload[0];
-      sendRelayCommand ((posInArray-1) ,switchState);
-  }else if (TestTopic == 2){
-   //Serial.print("Custom Link Activated:");
-    char* token = strtok(topic,linkTopic1); // Remove the Link topic so that only the number is available
-    int link = atoi(token);
-   //Serial.println(link);
-    char* payld = payload ;
-    int cmdNr = atoi(payld);
-   //Serial.println(cmdNr);
-      stop_publish = 1 ;
-         //Serial.print("Link :");
-         //Serial.println(link);
+  byte TestTopic = testForPOWERcommand(topic);      // Check if this is a POWER Command
+    if(TestTopic == 1){                             // POWER Command Recieved
+      if (command < 3){                            // Payload can olny be 0 = OFF , 1 == ON , 2 = Toggle
+        char* token = strtok(topic,inPOWERcommand);  // Remove the Topic so that only the number is available char* to int
+        //Serial.println(F("Correct POWER Command"));
+        int posInArray = atoi(token);
+        char* switchState = (char)payload[0];
+        sendRelayCommand((posInArray-1) ,command);
+      }else{
+       // Serial.println(F("Invalid POWER Command"));
+      }
+    } 
+ // ----------LINK Topic Command -------------------    // Custom Link Command Recieved - This will Come in as /# (/100 , /101) number - 100 = Link Command   
+      else if (TestTopic == 2){                        
+        char* token = strtok(topic,linkTopic1);        // Remove the Link topic so that only the number is available
+        int link = atoi(token);
+        //stop_publish = 1 ;
           if (link >= 100 && link <= (NUM_LINKS+101) ){   // To make sure that the Data is correct
-           //Serial.println("Update EEPROM with relay link :");
-            int RelayPl = (link*2)-97 ;// +2 is to make sure that two places is used fo the int
-  String msgIN = "";
-for (int i=0;i<length;i++)
-{
-msgIN += (char)payload[i];
-Serial.print((char)payload[i]);
-}
-val = msgIN; // this is the payload from MQTT
-int cmdNr1 = val.toInt();
-            write_data(RelayPl,cmdNr1);
-          }else if (link >= 200 && link <= 221 ){
+            if (command <= pinCount) {                    // The Amount if realays Anailable so if the value is more than that I would not work to link it
+              int RelayPl = (link*2)-97 ;                 // +2 is to make sure that two places is used fo the int
+              write_data(RelayPl,command);
+            }
+          }
+    // No longer need to activate link 200 as the Links is declaired as global viarables.      
+    /*      else if (link >= 200 && link <= 221 ){
            //Serial.print("Link Switch Activated:");
            //Serial.println(cmdNr);
                         if (link == 201){ // The Code to activate or deactivate the Auto Switch
                             //cmnd = atol(val.c_str());
-                            if (cmdNr  == 1 or cmdNr  == 0){ // Verify that the correct command was sent. 
-                            write_data(201,cmdNr);
+                            if (command  == 1 or command  == 0){ // Verify that the correct command was sent. 
+                            write_data(201,command);
                             update_sw (201); 
                             sprintf(outLinkR ,"%s%s%s%d",stat,maintopicV,link,201);
                             //cmnd.toCharArray( payLd,2 ); 
@@ -115,7 +110,7 @@ int cmdNr1 = val.toInt();
                       }else if (link == 202) {  // Switch to activate manual overide 
                              //Serial.print("Link Number:");
                              //Serial.println(cmdNr);
-                              int i = cmdNr ;
+                              int i = command ;
                              //Serial.println(i);
                               write_data(202,i);
                               update_sw (202);                    
@@ -123,16 +118,9 @@ int cmdNr1 = val.toInt();
           } 
 
       stop_publish = 0 ; 
+      */
     }
   } 
-  
- 
-
-
-
-
-
-  
 }
 
 // #############################################################################################################

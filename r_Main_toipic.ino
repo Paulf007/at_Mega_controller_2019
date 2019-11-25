@@ -18,22 +18,27 @@ if(testLenth > 1){
   
 }
 
-void sendRelayCommand (byte posInArray ,char* switchState ){
-    if (switchState == '2') {
+void sendRelayCommand (byte posInArray ,int switchState ){
+ // Serial.print(F("Relay Command"));
+ // Serial.print(switchState);
+  if (switchState == 2) {
     if (relayStates[posInArray] == HIGH) {
       switchState = '1';
-    }
-    else {
+    }else {
       switchState = '0';
-    }
-  }
-  if (isMutuallyExclude) {
-    mutuallyExcludePair(switchState, posInArray);
-  }
+      }
+        }else if (switchState == 1){
+          switchState = '1';
+          }else{
+            switchState = '0';
+            } 
+ // if (isMutuallyExclude) {
+ //   mutuallyExcludePair(switchState, posInArray);
+ // }
   switchRelay(switchState, posInArray);
-  if (switchState == '1') {
-    doSwitch = true;
-  }
+//  if (switchState == '1') {
+//   doSwitch = true;
+//  }
   delayTimers();
 }
 

@@ -14,13 +14,15 @@ void run_send_data (){
    send_tele_state ();
    publishStates();     // states of the relays will be sent every 5 min - 
   // reportInputStates(); //states of the imput pins will be reported
-   update_sw (201);     // Links to Relays Will be send every 5 min
+  // update_sw (201);     // Links to Relays Will be send every 5 min
   
   
 }
 
 
 void sensorData (){
+  char sensorTopic[35]="";
+  sprintf(sensorTopic ,"%s%s%s",tele,maintopicV,"/SENSOR"); 
   //int chk = DHT.read11(DHT11_PIN);
   //temp = DHT.temperature;
   //hum = DHT.humidity;
@@ -48,6 +50,7 @@ ANALOG["A12"] = anl;
  // serializeJson(doc, Serial);
  // Serial.println();
  size_t n = serializeJson(doc, buffer);
+
 client.publish(sensorTopic, buffer,n);
 doc.clear(); 
 }
@@ -67,11 +70,15 @@ void sendStatusData(byte stat){
       char buffer[80];
       serializeJson(doc, buffer);
       size_t n = serializeJson(doc, buffer);
+      char status_0[40]="";
+      sprintf(status_0 ,"%s%s%s","stat/",maintopicV,"/STATUS");
       client.publish(status_0, buffer,n);
      //Serial.print("freeMemory()=");
    // Serial.println(freeMemory());
     doc.clear();
   } else if (stat == 5){ // is the byte version of 5
+      char status_5[40]="";
+      sprintf(status_5 ,"%s%s%s","stat/",maintopicV,"/STATUS5");
       //Serial.println("Case 5 Run");
       StaticJsonDocument<50> doc5;
       JsonObject Status5  = doc5.createNestedObject("StatusNET");  
@@ -80,9 +87,10 @@ void sendStatusData(byte stat){
       char buffer5[75];
       serializeJson(doc5, buffer5);
       size_t n5 = serializeJson(doc5, buffer5);
+      //Serial.println(status_5);
       client.publish(status_5, buffer5,n5);
     //Serial.print("freeMemory()=");
-    //Serial.println(freeMemory());
+    
 
     doc5.clear();
   }
