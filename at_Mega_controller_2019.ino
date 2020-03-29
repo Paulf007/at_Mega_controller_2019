@@ -78,7 +78,7 @@ static VirtualDelay  webTimeOut , sensorUpdate ;
 //+------------------------------------------------------------------+
 unsigned long previousKick = 0;
 //const long kickInterval = 15000 ; // for Testing 
-const long kickInterval = 600000 ; // 10 Min    
+const long kickInterval = 610000 ; // 11 Min - Sothat the second payload could be recieved for incase.     
 //+------------------------------------------------------------------+
 //| oled
 //+------------------------------------------------------------------+
