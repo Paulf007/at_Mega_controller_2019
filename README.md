@@ -21,3 +21,6 @@ To link the Relay with the Switch and save it to the eeprom so that it is used i
 To Change the Auto Command from ON or OFF use the following command
 
 cmnd/mainhouse/relayLink/201 Payload : 1 – ON or 2 – OFF
+
+A Watch dog timer was added to make sure the MQTT connection stays active. It will send a payload of 10 to cmnd/~devName~/STATUS this will then recieve the payload and reset the timer. Should the timer run out (Miss two payloads) the board will be restarted.
+The kick will happen every 5 min with the status updates. 
