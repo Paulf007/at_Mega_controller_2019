@@ -5,7 +5,7 @@ if ( mqttActive == 1){
  if ((unsigned long)(currentMillis - previousMillis) >= interval) { // Run Every 5 Min
   run_send_data();
   char kick[35]="";
-  sprintf(kick ,"%s%s%s","stat/",maintopicV,"/KICK");
+  sprintf(kick ,"%s%s%s","cmnd/",maintopicV,"/STATUS");
   client.publish(kick,"10");
  previousMillis = currentMillis;
     }
