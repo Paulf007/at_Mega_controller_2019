@@ -2,8 +2,11 @@ void time_data () {
 if ( mqttActive == 1){  
  unsigned long currentMillis = millis(); // grab current time
   // check if "interval" time has passed (1000 milliseconds)
- if ((unsigned long)(currentMillis - previousMillis) >= interval) {
+ if ((unsigned long)(currentMillis - previousMillis) >= interval) { // Run Every 5 Min
   run_send_data();
+  char kick[35]="";
+  sprintf(kick ,"%s%s%s","stat/",maintopicV,"/KICK");
+  client.publish(kick,"10");
  previousMillis = currentMillis;
     }
     
@@ -107,7 +110,9 @@ void send_tele_state (){
   serializeJson(doc, buffer);
  size_t n = serializeJson(doc, buffer);
 //serializeJson(doc, Serial);
-client.publish("tele/garage/STATE", buffer,n);
-doc.clear();  
-sensorData ();
+ char state[40]="";
+ sprintf(state ,"%s%s%s","tele/",maintopicV,"/STATE");
+    client.publish(state, buffer,n);
+    doc.clear();  
+    sensorData ();
 }

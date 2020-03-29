@@ -40,6 +40,7 @@ The Embedded Network Setup Webpage was Made by JO3RI check http://www.jo3ri.be/a
 * 39 - Link Custom On Start sothat the memory does not get called all the time. 
 * 40 -  updated the read of commands
 * 41 -  cleaned the code - Removed Serial.Print
+* 42 - Add Keep Alive - This to ensure that if MQQT "Kick value" is not recieved the board vir be restart
 * Genereate Mac: https://ssl.crox.net/arduinomac/
 * NOTE IF USING A NEW BOARD FIRST RUN EEPROM CLEAR
 * 
@@ -56,11 +57,11 @@ The Embedded Network Setup Webpage was Made by JO3RI check http://www.jo3ri.be/a
 #include <ArduinoJson.h>
 #include "avdweb_VirtualDelay.h"
 //#include <MemoryFree.h>
-int ver = 41 ;
-const char* Fname = "Test Bank"; // This is currently Static Could be changed later Via MQTT
-const char* macS = "90:A2:DA:F6:43:A7"; // This is used to report the mac address for the Monitor
+int ver = 42 ;
+const char* Fname = "Arduino Controller"; // This is currently Static Could be changed later Via MQTT
+const char* macS = "90:A2:DA:50:68:7D"; // This is used to report the mac address for the Monitor
 byte ip[] = {192,168,8,91};
-byte mac[6] = { 0x90, 0xA2, 0xDA, 0xF6, 0x43, 0xA7};
+byte mac[6] = { 0x90, 0xA2, 0xDA, 0x50, 0x68, 0x7D };
 //+------------------------------------------------------------------+
 //| Link Custom Links from Memory
 //+------------------------------------------------------------------+
@@ -72,8 +73,12 @@ byte linkArray[] = {Link0 ,Link1,Link2,Link3,Link4,Link5,Link6,Link7,Link8,Link9
 //|Setup Virtual Delay
 //+------------------------------------------------------------------+
 static VirtualDelay  webTimeOut , sensorUpdate ;
-
-
+//+------------------------------------------------------------------+
+//|Setup MQTT WDT - To restart if MSG not recieved
+//+------------------------------------------------------------------+
+unsigned long previousKick = 0;
+//const long kickInterval = 15000 ; // for Testing 
+const long kickInterval = 600000 ; // 10 Min    
 //+------------------------------------------------------------------+
 //| oled
 //+------------------------------------------------------------------+
@@ -461,6 +466,7 @@ void loop(){
   client.loop();
    // Publish web page
   }
+  checkKick(); // Check if a MQTT Kick meassage was recieved to keep the board from restarting
   read_input_pins ();
   //analog () ; //Analog sensor can be placed on pin A12 to measure souns levels , could be used as a general alarm or klap sensor. 
   time_data () ;

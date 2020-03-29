@@ -12,10 +12,10 @@ void subscribe_intopic (){
     }
 }
 
+// Timer to run and check if Kick Command is Recieved - This will run for 300s 
+
 
 String val;
-
-
 
 void callback(char* topic, byte* payload, unsigned int length) {
 /* - use to confirm if MQTT recieve command
@@ -66,6 +66,9 @@ if(strcmp(topic, chTopicV) == 0){
      } else if  (command == 9){         // STATUS = 9 Will activate web page
       webpageActive = 1 ;
        webTimeOut.start(300000);
+      }else if (command == 10){
+        Serial.println("Kick Recieved");
+        previousKick = millis();
       }
         }else{ 
  // ----------POWER Topic Command -------------------   // Will come in as POWER# (POWER1 , POWER2)
