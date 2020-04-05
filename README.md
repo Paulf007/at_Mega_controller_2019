@@ -7,9 +7,9 @@ Start up from scratch : 1. Default Ip for config is 192.168.8.0 2. Got to http:/
 
 The Command topic will be :  cmd//changetopic and 	
 Payload 			 :  mainhouse
-This needs to change as the commands need identify your custom name – below is an example to the custom topic used “mainhouse” Topics for MQTT Server General info Topic : stat/mainhouse/state Relay Command topic : cmnd/mainhouse/POWER/# Where "/r1 = 1  - ON Where "/r1 = 0  - OFF Where "/r1 = 2
+This needs to change as the commands need identify your custom name – below is an example to the custom topic used “mainhouse” Topics for MQTT Server General info Topic : stat/mainhouse/state Relay Command topic : cmnd/mainhouse/POWER# Where "# = 1 (Relay 1) payload = 1 - ON Where"payload = 0  - OFF Where payload = 2 - Toggle - (cmnd/mainhouse/POWER1) - Full Command
 
-Toggle Status of relay is reported on : stat/mainhouse/POWER Status of Input Pins : stat/mainhouse/SWITCH Last will and testament : stat/mainhouse/LWT Main topic can be changed at : cmnd/atmegarelay/mainhouse/changetopic
+Status of relay is reported on : stat/mainhouse/POWER# Status of Input Pins : stat/mainhouse/SWITCH Last will and testament : stat/mainhouse/LWT Main topic can be changed at : cmnd/atmegarelay/mainhouse/changetopic
 NOTE THE MAIN TOPIC MUST BE UNIQUE !
 
 Commands :
