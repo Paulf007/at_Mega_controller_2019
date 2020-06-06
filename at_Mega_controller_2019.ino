@@ -60,8 +60,8 @@ The Embedded Network Setup Webpage was Made by JO3RI check http://www.jo3ri.be/a
 int ver = 42 ;
 const char* Fname = "Arduino Controller"; // This is currently Static Could be changed later Via MQTT
 const char* macS = "90:A2:DA:50:68:7D"; // This is used to report the mac address for the Monitor
-byte ip[] = {192,168,8,91};
-byte mac[6] = { 0x90, 0xA2, 0xDA, 0x50, 0x68, 0x7D };
+byte ip[] = {192,168,8,12};
+//byte mac[6] = { 0x90, 0xA2, 0xDA, 0x60, 0x30, 0x75 }; // Look at intro to create new mac adress
 //+------------------------------------------------------------------+
 //| Link Custom Links from Memory
 //+------------------------------------------------------------------+

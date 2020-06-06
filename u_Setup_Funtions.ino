@@ -70,9 +70,11 @@ void ShieldSetup(){
     //So we will read the values out of EERPOM and use them
     //to setup the shield.
     Serial.println(F("Setup was done Before"));
+   /* You can enable this part if you want to change the mac on page
     for (int i = 0; i < 6; i++){
       mac[i] = EEPROM.read(i+1);
     }
+    */
     for (int i = 0; i < 4; i++){
       ip[i] = EEPROM.read(i+7);
     }
@@ -82,6 +84,7 @@ void ShieldSetup(){
     for (int i = 0; i < 4; i++){
       gateway[i] = EEPROM.read(i+15);
     }
+    
    //#############
     for (int i = 0; i < 4; i++){         
       mqttserver[i] = EEPROM.read(i+19);
