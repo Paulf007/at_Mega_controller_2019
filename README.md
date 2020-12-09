@@ -1,9 +1,9 @@
 # at_Mega_controller_2019
-Complte New Updated version
+Complete New Updated version
 
 Relay and Input Controller via MQTT
 
-Start up from scratch : 1. Default Ip for config is 192.168.8.0 2. Got to http://192.168.0.2/setup and set the nessasary network settings press submit 3. Your device will restart and connect to your broker. (Red LED will be on permanent if connected) 4. Go to http://”new device ip” to get the config topic – Should add your own custom main topic The default topic on startup is : cmnd//changetopic
+Start up from scratch : 1. Default Ip for config is 192.168.8.0 2. Go to http://192.168.0.2/setup and set the nessasary network settings press submit 3. Your device will restart and connect to your broker. (Red LED will be on permanent if connected) 4. Go to http://”new device ip” to get the config topic – Should add your own custom main topic The default topic on startup is : cmnd//changetopic
 
 The Command topic will be :  cmd//changetopic and 	
 Payload 			 :  mainhouse
