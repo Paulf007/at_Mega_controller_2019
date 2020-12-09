@@ -57,7 +57,7 @@ The Embedded Network Setup Webpage was Made by JO3RI check http://www.jo3ri.be/a
 #include <ArduinoJson.h>
 #include "avdweb_VirtualDelay.h"
 //#include <MemoryFree.h>
-int ver = 42 ;
+int ver = 43 ;
 const char* Fname = "Arduino Controller"; // This is currently Static Could be changed later Via MQTT
 const char* macS = "90:A2:DA:50:68:7D"; // This is used to report the mac address for the Monitor
 byte ip[] = {192,168,8,12};
@@ -150,10 +150,14 @@ const char* chTopic = "cmd/atmegarelay/maintopic/changetopic";
 */
 // Delaire base topic for variable topics these are fixed and will not change
 
-const char* OffA = " : OFF" ;
+const char* OffA = " : OFF" ; // OLED Payload
 const char* OnA = " : ON" ;
-const char* OFF = "OFF" ;
-const char* ON = "ON" ;
+
+// Change to 1 and 0 for ON and OFF
+//const char* OFF = "OFF" ;
+//const char* ON = "ON" ;
+byte OFF = 0;
+byte ON = 1;
 
 //const char* msPowerOff = "OFF" ;
 //const char* msPowerOn = "ON" ;
@@ -201,7 +205,7 @@ char sensorTopic[30]="";
 
 //seting up the EthernetShield
 //change the defaults the match your own network
-//byte mac[6] = { 0x90, 0xA2, 0xDA, 0x18, 0x25, 0x77 };
+byte mac[6] = { 0x90, 0xA2, 0xDA, 0x18, 0x25, 0x77 };
 //byte ip[] = {192,168,8,91};
 byte subnet[] = {255,255,255,0};
 byte gateway[] = {192,168,8,1};

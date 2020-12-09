@@ -31,7 +31,7 @@ void sensorData (){
   //hum = DHT.humidity;
     float h = dht.readHumidity();
     float t = dht.readTemperature();
-    float hic = dht.computeHeatIndex(t, h, false);
+    float hic = dht.computeHeatIndex(t, h, false)+0.05; // Round to 1 dec
   show_tempR4 (t,h);// to OLED
   int anl = analogRead(photocellPin);
  //Serial.println(anl);
